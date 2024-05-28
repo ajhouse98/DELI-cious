@@ -1,0 +1,22 @@
+Sandwich length: 4"
+Toasted: Yes
+*** Meats ***
+Ham
+Bacon
+*** Cheeses ***
+American
+Provolone
+Cheddar
+Swiss
+*** Toppings ***
+Lettuce
+Peppers
+Tomatoes
+Jalapenos
+*** Sauces ***
+Mayo
+Ketchup
+Total Price: $10.5
+Total Drink Price: $2.0
+Total Chip Price: $1.5
+Total Order Price: $14.0

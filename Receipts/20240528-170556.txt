@@ -1,0 +1,17 @@
+Sandwich length: 12"
+Toasted: Yes
+*** Meats ***
+Ham
+Bacon
+*** Cheeses ***
+American
+*** Toppings ***
+*** Sauces ***
+Mayo
+Mustard
+Ketchup
+Ranch
+Total Price: $14.75
+Total Drink Price: $2.5
+Total Chip Price: $1.5
+Total Order Price: $18.75
