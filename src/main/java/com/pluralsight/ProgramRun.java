@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class ProgramRun {
     private Scanner userInput = new Scanner(System.in);
-    private Sandwich sandwich;
+    private List<Sandwich> sandwiches = new ArrayList<>();
     private double totalDrinkPrice;
     private double totalChipPrice;
 
@@ -75,82 +75,97 @@ public class ProgramRun {
     }
 
     private void addSandwich() {
-        System.out.print("""
+        boolean addMore;
+        do {
+            int sizeOption = 0;
+            while (sizeOption < 1 || sizeOption > 3) {
+                System.out.print("""
                 
                 *** Sandwich Size ***
-                
                 1) 4"
                 2) 8"
-                3) 12" 
+                3) 12"
                 
                 What size would you like?: """);
-        int sizeOption = userInput.nextInt();
-        userInput.nextLine(); // Consume the newline
-        int sandwichLength = switch (sizeOption) {
-            case 1 -> 4;
-            case 2 -> 8;
-            case 3 -> 12;
-            default -> 0;
-        };
+                try {
+                    sizeOption = Integer.parseInt(userInput.nextLine());
+                    if (sizeOption < 1 || sizeOption > 3) {
+                        System.out.println("Invalid input. Please select a valid size (1-3).");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input. Please enter a number between 1 and 3.");
+                }
+            }
 
-        System.out.print("""
-                
+            int sandwichLength = switch (sizeOption) {
+                case 1 -> 4;
+                case 2 -> 8;
+                case 3 -> 12;
+                default -> 0; // This should never happen due to input validation
+            };
+
+            System.out.print("""
                 *** Breads *** 
-                                
-                White 
+                White
                 Wheat
                 Rye
                 Wrap
                 
                 Please select your bread of choice: """);
-        String breadType = userInput.nextLine();
+            String breadType = userInput.nextLine();
 
-        boolean isToasted = getBooleanInput("Do you want it toasted? (yes/no): ");
+            boolean isToasted = getBooleanInput("Do you want it toasted? (yes/no): ");
 
-        List<String> meats = new ArrayList<>();
-        System.out.println("\n*** Meats ***\n");
-        if (getBooleanInput("Do you want steak? (yes/no): ")) meats.add("Steak");
-        if (getBooleanInput("Do you want ham? (yes/no): ")) meats.add("Ham");
-        if (getBooleanInput("Do you want salami? (yes/no): ")) meats.add("Salami");
-        if (getBooleanInput("Do you want roast beef? (yes/no): ")) meats.add("Roast Beef");
-        if (getBooleanInput("Do you want chicken? (yes/no): ")) meats.add("Chicken");
-        if (getBooleanInput("Do you want bacon? (yes/no): ")) meats.add("Bacon");
+            List<String> meats = new ArrayList<>();
+            System.out.println("\n*** Meats ***\n");
+            if (getBooleanInput("Do you want steak? (yes/no): ")) meats.add("Steak");
+            if (getBooleanInput("Do you want ham? (yes/no): ")) meats.add("Ham");
+            if (getBooleanInput("Do you want salami? (yes/no): ")) meats.add("Salami");
+            if (getBooleanInput("Do you want roast beef? (yes/no): ")) meats.add("Roast Beef");
+            if (getBooleanInput("Do you want chicken? (yes/no): ")) meats.add("Chicken");
+            if (getBooleanInput("Do you want bacon? (yes/no): ")) meats.add("Bacon");
 
-        List<String> cheeses = new ArrayList<>();
-        System.out.println("\n*** Cheeses ***\n");
-        if (getBooleanInput("Do you want American cheese? (yes/no): ")) cheeses.add("American");
-        if (getBooleanInput("Do you want provolone cheese? (yes/no): ")) cheeses.add("Provolone");
-        if (getBooleanInput("Do you want cheddar cheese? (yes/no): ")) cheeses.add("Cheddar");
-        if (getBooleanInput("Do you want Swiss cheese? (yes/no): ")) cheeses.add("Swiss");
+            List<String> cheeses = new ArrayList<>();
+            System.out.println("\n*** Cheeses ***\n");
+            if (getBooleanInput("Do you want American cheese? (yes/no): ")) cheeses.add("American");
+            if (getBooleanInput("Do you want provolone cheese? (yes/no): ")) cheeses.add("Provolone");
+            if (getBooleanInput("Do you want cheddar cheese? (yes/no): ")) cheeses.add("Cheddar");
+            if (getBooleanInput("Do you want Swiss cheese? (yes/no): ")) cheeses.add("Swiss");
 
-        List<String> toppings = new ArrayList<>();
-        if (getBooleanInput("Would you like additional toppings? (yes/no): ")) {
-            System.out.println("\n*** Toppings ***\n");
-            if (getBooleanInput("Do you want lettuce? (yes/no): ")) toppings.add("Lettuce");
-            if (getBooleanInput("Do you want peppers? (yes/no): ")) toppings.add("Peppers");
-            if (getBooleanInput("Do you want onions? (yes/no): ")) toppings.add("Onions");
-            if (getBooleanInput("Do you want tomatoes? (yes/no): ")) toppings.add("Tomatoes");
-            if (getBooleanInput("Do you want jalapenos? (yes/no): ")) toppings.add("Jalapenos");
-            if (getBooleanInput("Do you want cucumbers? (yes/no): ")) toppings.add("Cucumbers");
-            if (getBooleanInput("Do you want pickles? (yes/no): ")) toppings.add("Pickles");
-            if (getBooleanInput("Do you want guacamole? (yes/no): ")) toppings.add("Guacamole");
-            if (getBooleanInput("Do you want mushrooms? (yes/no): ")) toppings.add("Mushrooms");
-        }
+            List<String> toppings = new ArrayList<>();
+            if (getBooleanInput("Would you like additional toppings? (yes/no): ")) {
+                System.out.println("\n*** Toppings ***\n");
+                if (getBooleanInput("Do you want lettuce? (yes/no): ")) toppings.add("Lettuce");
+                if (getBooleanInput("Do you want peppers? (yes/no): ")) toppings.add("Peppers");
+                if (getBooleanInput("Do you want onions? (yes/no): ")) toppings.add("Onions");
+                if (getBooleanInput("Do you want tomatoes? (yes/no): ")) toppings.add("Tomatoes");
+                if (getBooleanInput("Do you want jalapenos? (yes/no): ")) toppings.add("Jalapenos");
+                if (getBooleanInput("Do you want cucumbers? (yes/no): ")) toppings.add("Cucumbers");
+                if (getBooleanInput("Do you want pickles? (yes/no): ")) toppings.add("Pickles");
+                if (getBooleanInput("Do you want guacamole? (yes/no): ")) toppings.add("Guacamole");
+                if (getBooleanInput("Do you want mushrooms? (yes/no): ")) toppings.add("Mushrooms");
+            }
 
-        List<String> sauces = new ArrayList<>();
-        System.out.println("\n*** Sauces ***\n");
-        if (getBooleanInput("Do you want mayo? (yes/no): ")) sauces.add("Mayo");
-        if (getBooleanInput("Do you want mustard? (yes/no): ")) sauces.add("Mustard");
-        if (getBooleanInput("Do you want ketchup? (yes/no): ")) sauces.add("Ketchup");
-        if (getBooleanInput("Do you want ranch? (yes/no): ")) sauces.add("Ranch");
-        if (getBooleanInput("Do you want Thousand Islands? (yes/no): ")) sauces.add("Thousand Islands");
-        if (getBooleanInput("Do you want vinaigrette? (yes/no): ")) sauces.add("Vinaigrette");
+            List<String> sauces = new ArrayList<>();
+            System.out.println("\n*** Sauces ***\n");
+            if (getBooleanInput("Do you want mayo? (yes/no): ")) sauces.add("Mayo");
+            if (getBooleanInput("Do you want mustard? (yes/no): ")) sauces.add("Mustard");
+            if (getBooleanInput("Do you want ketchup? (yes/no): ")) sauces.add("Ketchup");
+            if (getBooleanInput("Do you want ranch? (yes/no): ")) sauces.add("Ranch");
+            if (getBooleanInput("Do you want Thousand Islands? (yes/no): ")) sauces.add("Thousand Islands");
+            if (getBooleanInput("Do you want vinaigrette? (yes/no): ")) sauces.add("Vinaigrette");
 
-        sandwich = new Sandwich(sandwichLength, isToasted, meats, cheeses, toppings, sauces);
+            Sandwich newSandwich = new Sandwich(sandwichLength, isToasted, meats, cheeses, toppings, sauces);
+            sandwiches.add(newSandwich);
+            System.out.println("\nSandwich added to your order!\n");
+
+            addMore = getBooleanInput("Would you like to add another sandwich? (yes/no): ");
+        } while (addMore);
     }
 
     private void addDrink() {
         System.out.print("""
+                
                 *** Drinks ***
                                 
                 1) Sprite
@@ -166,6 +181,7 @@ public class ProgramRun {
 
         if (drinkOption >= 1 && drinkOption <= 6) {
             System.out.print("""
+                    
                     1) Small ($2.00)
                     2) Medium ($2.50)
                     3) Large ($3.00)
@@ -184,6 +200,7 @@ public class ProgramRun {
 
     private void addChips() {
         System.out.println("""
+                
                 *** Chips ***
                                 
                 1) Lays
@@ -194,6 +211,7 @@ public class ProgramRun {
                 6) Cheetos
                 
                 Please select a chip: """);
+
         int chipOption = userInput.nextInt();
         userInput.nextLine(); // Consume the newline
 
@@ -203,15 +221,22 @@ public class ProgramRun {
     }
 
     private void checkout() {
-        if (sandwich != null) {
+        if (!sandwiches.isEmpty()) {
             System.out.println("\n*** Order Summary ***");
-            String summary = sandwich.getSummary();
-            System.out.println(summary);
-            System.out.println("Total Drink Price: $" + totalDrinkPrice);
-            System.out.println("Total Chip Price: $" + totalChipPrice);
-            double totalPrice = sandwich.getTotalPrice() + totalDrinkPrice + totalChipPrice;
+            StringBuilder summary = new StringBuilder();
+            double totalPrice = 0;
+            for (Sandwich sandwich : sandwiches) {
+                String sandwichSummary = sandwich.getSummary();
+                summary.append(sandwichSummary).append("\n");
+                totalPrice += sandwich.getTotalPrice();
+            }
+            System.out.println(summary.toString());
+            System.out.println("Drink Price: $" + totalDrinkPrice);
+            System.out.println("Chip Price: $" + totalChipPrice);
+            totalPrice += totalDrinkPrice + totalChipPrice;
             System.out.println("Total Order Price: $" + totalPrice);
-            saveOrderToFile(summary + "Total Drink Price: $" + totalDrinkPrice + "\nTotal Chip Price: $" + totalChipPrice + "\nTotal Order Price: $" + totalPrice);
+            saveOrderToFile(summary + "Drink Price: $" + totalDrinkPrice + "\nChip Price: $" +
+                    totalChipPrice + "\nTotal Order Price: $" + totalPrice);
         } else {
             System.out.println("No sandwich added.");
         }
@@ -224,13 +249,11 @@ public class ProgramRun {
 
         try {
             File directory = new File("Receipts");
-            if (!directory.exists()) {
-                directory.mkdir();
-            }
+
             FileWriter writer = new FileWriter(fileName);
             writer.write(orderSummary);
             writer.close();
-            System.out.println("Order has been saved to " + fileName);
+            System.out.println("\nOrder has been saved");
         } catch (IOException e) {
             System.out.println("An error occurred while saving the order.");
             e.printStackTrace();
@@ -246,9 +269,5 @@ public class ProgramRun {
             input = userInput.next().toLowerCase();
         }
         return input.equals("yes");
-    }
-
-    public static void main(String[] args) {
-        new ProgramRun();
     }
 }
