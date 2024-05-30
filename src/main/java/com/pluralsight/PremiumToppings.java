@@ -54,9 +54,4 @@ public class PremiumToppings extends Sandwich {
     public boolean getBacon() {
         return bacon;
     }
-
-//    @Override
-//    public double getPrice() {
-//        return price;
-//    }
 }
