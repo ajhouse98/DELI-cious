@@ -1,5 +1,4 @@
 package com.pluralsight;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,6 +13,10 @@ public class ProgramRun {
     private List<Sandwich> sandwiches = new ArrayList<>(); // List to store sandwiches
     private double totalDrinkPrice; // Total price for drinks
     private double totalChipPrice; // Total price for chips
+
+    public static void main(String[] args) {
+        new ProgramRun(); // Start the program
+    }
 
     public ProgramRun() { // Constructor for ProgramRun
         while (true) { // Infinite loop to keep the program running
@@ -57,6 +60,7 @@ public class ProgramRun {
                                         
                     Please make a selection: """);
             int option = userInput.nextInt(); // Get user's selection
+            userInput.nextLine(); // Consume the newline
 
             switch (option) { // Switch based on user's selection
                 case 1 -> addSandwich(); // Add a sandwich
@@ -154,20 +158,8 @@ public class ProgramRun {
             if (getBooleanInput("Do you want Thousand Islands? (yes/no): ")) sauces.add("Thousand Islands");
             if (getBooleanInput("Do you want vinaigrette? (yes/no): ")) sauces.add("Vinaigrette");
 
-            // Collect premium toppings
-            boolean steak = getBooleanInput("Would you like to add steak? (yes/no): ");
-            boolean ham = getBooleanInput("Would you like to add ham? (yes/no): ");
-            boolean salami = getBooleanInput("Would you like to add salami? (yes/no): ");
-            boolean roastBeef = getBooleanInput("Would you like to add roast beef? (yes/no): ");
-            boolean chicken = getBooleanInput("Would you like to add chicken? (yes/no): ");
-            boolean bacon = getBooleanInput("Would you like to add bacon? (yes/no): ");
-            boolean american = getBooleanInput("Would you like to add American cheese? (yes/no): ");
-            boolean provolone = getBooleanInput("Would you like to add provolone cheese? (yes/no): ");
-            boolean cheddar = getBooleanInput("Would you like to add cheddar cheese? (yes/no): ");
-            boolean swiss = getBooleanInput("Would you like to add swiss cheese? (yes/no): ");
-
-            // Create a new PremiumToppings object and add it to the order
-            PremiumToppings newSandwich = new PremiumToppings(sandwichLength, isToasted, meats, cheeses, toppings, sauces, steak, ham, salami, roastBeef, chicken, bacon, american, provolone, cheddar, swiss);
+            // Create a new Sandwich object and add it to the order
+            Sandwich newSandwich = new Sandwich(sandwichLength, isToasted, meats, cheeses, toppings, sauces);
             sandwiches.add(newSandwich); // Add the sandwich to the list of sandwiches
             System.out.println("Sandwich added to your order!");
 
@@ -191,7 +183,8 @@ public class ProgramRun {
         userInput.nextLine(); // Consume the newline
 
         if (drinkOption >= 1 && drinkOption <= 6) { // If a valid drink option is selected
-            System.out.print("""
+            System.out.print("""                    
+                    
                     1) Small ($2.00)
                     2) Medium ($2.50)
                     3) Large ($3.00)
@@ -254,12 +247,14 @@ public class ProgramRun {
         try {
             File directory = new File("Receipts"); // Ensure the Receipts directory exists
             if (!directory.exists()) {
-                directory.mkdirs(); // Create the Receipts directory if it doesn't exist
+                directory.mkdirs();
             }
+
             FileWriter writer = new FileWriter(fileName); // Write the order summary to the file
             writer.write(orderSummary);
             writer.close();
             System.out.println("Order has been saved to " + fileName); // Confirm the save
+
         } catch (IOException e) {
             System.out.println("An error occurred while saving the order."); // Handle errors during file writing
             e.printStackTrace();
@@ -269,6 +264,7 @@ public class ProgramRun {
     private boolean getBooleanInput(String message) { // Method to get a yes/no input from the user
         System.out.print(message); // Print the prompt message
         String input = userInput.next().toLowerCase(); // Read the user's input and convert to lowercase
+
         while (!input.equals("yes") && !input.equals("no")) { // Loop until the user enters 'yes' or 'no'
             System.out.println("Please enter 'yes' or 'no'.");
             System.out.print(message); // Print the prompt message again

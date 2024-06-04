@@ -33,8 +33,10 @@ public class Sandwich {
 
         // Calculate additional price based on the number of meats and their portion size
         double meatPrice = meats.size() * (1.00 + (0.50 * (sandwichLength / 4 - 1)));
+
         // Calculate additional price based on the number of cheeses and their portion size
         double cheesePrice = cheeses.size() * (0.75 * sandwichLength / 4);
+
         // Add meat and cheese prices to the base price
         price += meatPrice + cheesePrice;
     }
